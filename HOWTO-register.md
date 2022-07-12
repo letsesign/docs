@@ -14,9 +14,7 @@ Here `letsesign-register` is an open-source command line tool, while `SITE_CONFI
            "rootDomain": "",
            "bearerSecret": "",
            "awsAccessKeyID": "",
-           "awsSecretAccessKey": "",
-           "signerAppURL": "https://signer.letsesign.org/#/esign",
-           "enhancedPrivacy": false
+           "awsSecretAccessKey": ""
        },
        "sesConfig": {
            "sesSMTPUsername": "",
@@ -31,8 +29,6 @@ Here `letsesign-register` is an open-source command line tool, while `SITE_CONFI
   ```
   
 - In the `config` section, you need to set a secret string named `bearerSecret`, in addition to your `awsAccessKeyID` and `awsSecretAccessKey`, which can be obtained by the steps described in [Getting Your AWS Credentials](https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/getting-your-credentials.html). If you are an advanced user and want to minimize the privilege of the credentials used here, it suffices to grant the corresponding IAM user the right to perform `kms:*` actions only. Note `letsesign-register` will not let `bearerSecret`, `awsAccessKeyID` and `awsSecretAccessKey` leave your machine.
-
-   Leave `signerAppURL` and `enhancedPrivacy` unchanged for now, and don't forget to set your `rootDomain`.
   
 - To fill up the `sesConfig` section, follow the instructions in [How to bring your own AWS SES credential](https://github.com/letsesign/docs/blob/main/HOWTO-ses.md). This is for sending the request and notification emails.
   
