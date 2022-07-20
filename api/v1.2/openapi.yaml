@@ -524,7 +524,7 @@ paths:
                 imapConfig:
                   "$ref": "#/components/schemas/imapConfig"
                 taskPassword:
-                  "$ref": "#/components/schemas/getResultPassword"
+                  "$ref": "#/components/schemas/taskPassword"
               required:
                 - taskID
                 - imapConfig
@@ -566,14 +566,17 @@ components:
     bindingDataHash:
       type: string
       description: The Base64 string that encodes the hash value binding the eSignature request result to the original user data
+    taskPassword:
+      type: string
+      description: The PDF password when the **enhanced email privacy** feature is enabled
     ##############################################################################
     #
     #  Request components
     #
     ##############################################################################
     signerInfoList:
-      description: The ordered list in which each object represents a signer, with the zero-based index being the signer's sequence number
       type: array
+      description: The ordered list in which each object represents a signer, with the zero-based index being the signer's sequence number
       items:
         type: object
         properties:
@@ -749,27 +752,25 @@ components:
       description: The Base64 string that encodes the PDF document
     imapConfig:
       type: object
+      description: The parameters needed for accessing the IMAP server
       properties:
         host:
           type: string
-          description: Hostname of the IMAP server
+          description: The hostname of the IMAP server
         port:
           type: integer
-          description: Port number of the IMAP server
+          description: The port number of the IMAP server
         user:
           type: string
-          description: Username for IMAP authentication
+          description: The username for IMAP authentication
         password:
           type: string
-          description: Password for IMAP authentication
+          description: The password for IMAP authentication
       required:
         - host
         - port
         - user
         - password
-    getResultPassword:
-      type: string
-      description: The decryption password when the **enhanced email privacy** feature is enabled
     ##############################################################################
     #
     #  Response components
@@ -786,9 +787,6 @@ components:
     taskID:
       type: string
       description: The request task ID
-    taskPassword:
-      type: string
-      description: The PDF password when the **enhanced email privacy** feature is enabled
     sendResponse:
       type: object
       properties:
@@ -953,4 +951,3 @@ components:
       required: true
       schema:
         type: string
-
