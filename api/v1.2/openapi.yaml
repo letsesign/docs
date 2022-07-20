@@ -36,10 +36,10 @@ paths:
                 pdfFileData:
                   "$ref": "#/components/schemas/pdfFileData"
               required:
-              - taskConfig
-              - fieldList
-              - pdfFileName
-              - pdfFileData
+                - taskConfig
+                - fieldList
+                - pdfFileName
+                - pdfFileData
         required: true
       responses:
         200:
@@ -72,8 +72,8 @@ paths:
                 template:
                   "$ref": "#/components/schemas/template"
               required:
-              - taskConfig
-              - template
+                - taskConfig
+                - template
         required: true
       responses:
         200:
@@ -87,7 +87,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/errorResponse"              
+                $ref: "#/components/schemas/errorResponse"
   ##############################################################################
   #
   #  Bulk Send
@@ -115,10 +115,10 @@ paths:
                 pdfFileData:
                   "$ref": "#/components/schemas/pdfFileData"
               required:
-              - taskConfig
-              - fieldList
-              - pdfFileName
-              - pdfFileData
+                - taskConfig
+                - fieldList
+                - pdfFileName
+                - pdfFileData
         required: true
       responses:
         200:
@@ -151,8 +151,8 @@ paths:
                 template:
                   "$ref": "#/components/schemas/template"
               required:
-              - taskConfig
-              - template
+                - taskConfig
+                - template
         required: true
       responses:
         200:
@@ -192,9 +192,9 @@ paths:
                 pdfFileData:
                   "$ref": "#/components/schemas/pdfFileData"
               required:
-              - fieldList
-              - pdfFileName
-              - pdfFileData
+                - fieldList
+                - pdfFileName
+                - pdfFileData
         required: true
       responses:
         200:
@@ -229,9 +229,9 @@ paths:
                 pdfFileData:
                   "$ref": "#/components/schemas/pdfFileData"
               required:
-              - fieldList
-              - pdfFileName
-              - pdfFileData
+                - fieldList
+                - pdfFileName
+                - pdfFileData
         required: true
       responses:
         200:
@@ -250,7 +250,7 @@ paths:
   #
   #  Preview
   #
-  ##############################################################################  
+  ##############################################################################
   "/preview_send":
     post:
       tags:
@@ -273,10 +273,10 @@ paths:
                 pdfFileData:
                   "$ref": "#/components/schemas/pdfFileData"
               required:
-              - taskConfig
-              - fieldList
-              - pdfFileName
-              - pdfFileData
+                - taskConfig
+                - fieldList
+                - pdfFileName
+                - pdfFileData
         required: true
       responses:
         200:
@@ -309,8 +309,8 @@ paths:
                 template:
                   "$ref": "#/components/schemas/template"
               required:
-              - taskConfig
-              - template
+                - taskConfig
+                - template
         required: true
       responses:
         200:
@@ -349,10 +349,10 @@ paths:
                 signerNo:
                   "$ref": "#/components/schemas/signerNo"
               required:
-              - taskConfig
-              - fieldList
-              - pdfFileName
-              - pdfFileData
+                - taskConfig
+                - fieldList
+                - pdfFileName
+                - pdfFileData
         required: true
       responses:
         200:
@@ -387,8 +387,8 @@ paths:
                 signerNo:
                   "$ref": "#/components/schemas/signerNo"
               required:
-              - taskConfig
-              - template
+                - taskConfig
+                - template
         required: true
       responses:
         200:
@@ -428,9 +428,9 @@ paths:
                 bindingDataHash:
                   "$ref": "#/components/schemas/bindingDataHash"
               required:
-              - pdfBufferB64
-              - spfBufferB64
-              - bindingDataHash
+                - pdfBufferB64
+                - spfBufferB64
+                - bindingDataHash
         required: true
       responses:
         200:
@@ -463,8 +463,8 @@ paths:
                 spfBufferB64:
                   "$ref": "#/components/schemas/spfBufferB64"
               required:
-              - pdfBufferB64
-              - spfBufferB64
+                - pdfBufferB64
+                - spfBufferB64
         required: true
       responses:
         200:
@@ -507,15 +507,28 @@ paths:
               schema:
                 $ref: "#/components/schemas/errorResponse"
   "/get_result":
-    get:
+    post:
       tags:
         - Retrieval
       description: This API is for getting the result of a sent request.
       summary: Get the result of a sent request
       operationId: getResult
-      parameters:
-        - "$ref": "#/components/parameters/taskIDParam"
-        - "$ref": "#/components/parameters/bindingDataHashParam"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                taskID:
+                  "$ref": "#/components/schemas/taskID"
+                imapConfig:
+                  "$ref": "#/components/schemas/imapConfig"
+                taskPassword:
+                  "$ref": "#/components/schemas/getResultPassword"
+              required:
+                - taskID
+                - imapConfig
+        required: true
       responses:
         200:
           description: ""
@@ -553,11 +566,11 @@ components:
     bindingDataHash:
       type: string
       description: The Base64 string that encodes the hash value binding the eSignature request result to the original user data
-  ##############################################################################
-  #
-  #  Request components
-  #
-  ##############################################################################
+    ##############################################################################
+    #
+    #  Request components
+    #
+    ##############################################################################
     signerInfoList:
       description: The ordered list in which each object represents a signer, with the zero-based index being the signer's sequence number
       type: array
@@ -734,19 +747,42 @@ components:
     pdfFileData:
       type: string
       description: The Base64 string that encodes the PDF document
-  ##############################################################################
-  #
-  #  Response components
-  #
-  ##############################################################################
-  # Error
+    imapConfig:
+      type: object
+      properties:
+        host:
+          type: string
+          description: Hostname of the IMAP server
+        port:
+          type: integer
+          description: Port number of the IMAP server
+        user:
+          type: string
+          description: Username for IMAP authentication
+        password:
+          type: string
+          description: Password for IMAP authentication
+      required:
+        - host
+        - port
+        - user
+        - password
+    getResultPassword:
+      type: string
+      description: The decryption password when the **enhanced email privacy** feature is enabled
+    ##############################################################################
+    #
+    #  Response components
+    #
+    ##############################################################################
+    # Error
     errorResponse:
       type: object
       properties:
         errorMsg:
           type: string
           description: The error message
-  # Send
+    # Send
     taskID:
       type: string
       description: The request task ID
@@ -762,7 +798,7 @@ components:
           "$ref": "#/components/schemas/bindingDataHash"
         taskPassword:
           "$ref": "#/components/schemas/taskPassword"
-  # Bulk Send
+    # Bulk Send
     taskInfo:
       type: object
       properties:
@@ -799,23 +835,23 @@ components:
             oneOf:
               - "$ref": "#/components/schemas/taskSuccess"
               - "$ref": "#/components/schemas/taskError"
-  # Temlpate
+    # Temlpate
     templateResponse:
       type: object
       properties:
         template:
           "$ref": "#/components/schemas/template"
-  # Preview
+    # Preview
     pdfPreview:
       type: object
       properties:
         pdfPreviewB64:
           type: string
           description: The Base64 string that encodes the pre-rendered PDF file for preview
-  # Verify
+    # Verify
     magicNumber:
       type: string
-      description: The unique identifier generated by Let's eSign Enclave in runtime        
+      description: The unique identifier generated by Let's eSign Enclave in runtime
     signerList:
       type: array
       description: "The signer list"
@@ -857,7 +893,7 @@ components:
               "$ref": "#/components/schemas/magicNumber"
             bindingDataHash:
               "$ref": "#/components/schemas/bindingDataHash"
-  # Retrieval
+    # Retrieval
     taskTime:
       type: integer
       description: The task creation time in Unix epochs
