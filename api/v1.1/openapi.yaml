@@ -1,8 +1,8 @@
 openapi: 3.0.3
 info:
   title: Let's eSign API Server API
-  description: This API is documented in OpenAPI format and is for use with [**Let's eSign API Server v1.1.4**](https://github.com/letsesign/letsesign-api-server). You will need to deploy Let's eSign API Server at your site to use this API.
-  version: v1.1.4
+  description: This API is documented in OpenAPI format and is for use with [**Let's eSign API Server v1.1.x**](https://github.com/letsesign/letsesign-api-server). You will need to deploy Let's eSign API Server at your site to use this API.
+  version: v1.1
   license:
     name: MIT
     url: https://github.com/letsesign/letsesign-api-server/blob/main/LICENSE

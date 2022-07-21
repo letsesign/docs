@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: Let's eSign API Server API
   description: This API is documented in OpenAPI format and is for use with [**Let's eSign API Server v1.2.x**](https://github.com/letsesign/letsesign-api-server). You will need to deploy Let's eSign API Server at your site to use this API.
-  version: v1.2 Draft
+  version: v1.2
   license:
     name: MIT
     url: https://github.com/letsesign/letsesign-api-server/blob/main/LICENSE
@@ -169,13 +169,13 @@ paths:
                 $ref: "#/components/schemas/errorResponse"
   ##############################################################################
   #
-  #  Template
+  #  Create Template
   #
   ##############################################################################
   "/create_send_template":
     post:
       tags:
-        - Template
+        - Create Template
       description: This API is for creating a template to be used with the **/send_with_template** API.
       summary: Create a template to be used with Send API
       operationId: createSendTemplate
@@ -212,7 +212,7 @@ paths:
   "/create_bulk_send_template":
     post:
       tags:
-        - Template
+        - Create Template
       description: This API is for creating a template to be used with the **/bulk_send_with_template** API.
       summary: Create a template to be used with Bulk Send API
       operationId: createBulkSendTemplate
@@ -481,13 +481,13 @@ paths:
                 $ref: "#/components/schemas/errorResponse"
   ##############################################################################
   #
-  #  Retrieval
+  #  Retrieve
   #
   ##############################################################################
   "/get_status":
     get:
       tags:
-        - Retrieval
+        - Retrieve
       description: This API is for getting the status of a sent request.
       summary: Get the status of a sent request
       operationId: getStatus
@@ -509,7 +509,7 @@ paths:
   "/get_result":
     post:
       tags:
-        - Retrieval
+        - Retrieve
       description: This API is for getting the result of a sent request.
       summary: Get the result of a sent request
       operationId: getResult
@@ -568,7 +568,7 @@ components:
       description: The Base64 string that encodes the hash value binding the eSignature request result to the original user data
     taskPassword:
       type: string
-      description: The PDF password when the **enhanced email privacy** feature is enabled
+      description: The PDF/ZIP password when the **enhanced email privacy** feature is enabled
     ##############################################################################
     #
     #  Request components
@@ -752,14 +752,14 @@ components:
       description: The Base64 string that encodes the PDF document
     imapConfig:
       type: object
-      description: The parameters needed for accessing the IMAP server
+      description: The parameters needed for accessing the notificant's IMAP server
       properties:
         host:
           type: string
-          description: The hostname of the IMAP server
+          description: The hostname of the notificant's IMAP server
         port:
           type: integer
-          description: The port number of the IMAP server
+          description: The port number of the notificant's IMAP server
         user:
           type: string
           description: The username for IMAP authentication
@@ -833,7 +833,7 @@ components:
             oneOf:
               - "$ref": "#/components/schemas/taskSuccess"
               - "$ref": "#/components/schemas/taskError"
-    # Temlpate
+    # Create Temlpate
     templateResponse:
       type: object
       properties:
@@ -891,7 +891,7 @@ components:
               "$ref": "#/components/schemas/magicNumber"
             bindingDataHash:
               "$ref": "#/components/schemas/bindingDataHash"
-    # Retrieval
+    # Retrieve
     taskTime:
       type: integer
       description: The task creation time in Unix epochs
